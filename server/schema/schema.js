@@ -132,7 +132,7 @@ const Mutation = new GraphQLObjectType({
         id: { type: GraphQLID }
       },
       resolve(parent, args) {
-        return Book.remove();
+        return Book.deleteOne();
       }
     }
   }
