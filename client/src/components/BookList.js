@@ -6,16 +6,30 @@ import { getBooksQuery, getBookQuery } from '../queries/Queries';
 import BookDetails from './BookDetails';
 
 class BookList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      selected: null
+    }
+  }
+
   displayBooks() {
     // data from the gql query is passed down through props. 
     var data = this.props.data;
-    console.log(data);
     if (data.loading) {
       return (<div>Loading Books...</div>);
     } else {
       return data.books.map(book => {
         return (
-          <ListGroup key={book.id}>
+          <ListGroup
+            // Attaching an event handler to the list group item's book id. 
+            key={book.id}
+            onClick={event => {
+              this.setState({
+                selected: book.id
+              })
+            }}
+          >
             <ListGroup.Item>
               <Card style={{ width: "24rem" }}>
                 <Card.Body>
@@ -37,7 +51,7 @@ class BookList extends Component {
         <ul id="book-list">
           {this.displayBooks()}
         </ul>
-        <BookDetails />
+        <BookDetails bookId={this.state.selected} />
       </div>
     )
   }

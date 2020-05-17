@@ -1,6 +1,7 @@
 const graphql = require('graphql');
 const {
   GraphQLObjectType,
+  GraphQLInputObjectType,
   GraphQLString,
   GraphQLSchema,
   GraphQLID,
@@ -123,6 +124,15 @@ const Mutation = new GraphQLObjectType({
           authorId: args.authorId
         });
         return book.save();
+      }
+    },
+    deleteBook: {
+      type: BookType,
+      args: {
+        id: { type: GraphQLID }
+      },
+      resolve(parent, args) {
+        return Book.remove();
       }
     }
   }
